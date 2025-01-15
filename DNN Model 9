@@ -1,0 +1,47 @@
+### Only strongly correlated features are used as input to this model 
+
+# We declared a function for creating a model. 
+def build_model9_three_hidden_layers(): 
+    # Keras model object created from Sequential class. This will be the container that 
+contains all layers. 
+    model = Sequential() 
+ 
+    # The model so far is empty. It can be constructed by adding layers and 
+compilation. 
+    # This Keras model with multiple hidden layers. 
+ 
+    # Input Layer with 32 Neurons 
+    model.add(Dense(7, input_shape = (train_dataset_scaled.shape[1],)))    # Input 
+layer => input_shape must be explicitly designated 
+#     model.add(Activation('relu')) # relu or sigmoid. 
+ 
+    model.add(Dense(32,activation = 'relu'))                         # Hidden layer 1 => only 
+output dimension should be designated (output dimension = # of Neurons = 32) 
+ 
+    model.add(Dense(64, activation = 'relu'))                         # Hidden layer 2 => only 
+output dimension should be designated (output dimension = # of Neurons = 64) 
+ 
+    model.add(Dense(128, activation = 'relu'))                         # Hidden layer 3 => only 
+output dimension should be designated (output dimension = # of Neurons = 128) 
+ 
+ 
+291 
+ 
+    model.add(Dense(1))                          # Output layer => output dimension = 1 
+since it is a regression problem 
+ 
+    # Activation: sigmoid, softmax, tanh, relu, LeakyReLU. 
+    #Optimizer: SGD, Adam, RMSProp, etc. # 
+https://www.tensorflow.org/api_docs/python/tf/keras/optimizers 
+    learning_rate = 0.001 
+    optimizer = optimizers.RMSprop(learning_rate) 
+    model.compile(loss='mse', 
+                optimizer=optimizer, 
+                metrics=['mae', 'mse', 'mape']) # for regression problems, mean squared 
+error (MSE) is often employed 
+ 
+    return model 
+ 
+model9 = build_model9_three_hidden_layers() 
+print('Here is a summary of this model: ') 
+model9.summary()
