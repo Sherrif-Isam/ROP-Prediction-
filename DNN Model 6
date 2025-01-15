@@ -1,0 +1,49 @@
+### Build a Neural Network Model with Three Hidden Layers  
+
+############## This is the same structure as Model 2 but with only the most correlated features are used here as input features 
+
+# Import necessary modules for constructing and optimizing the model.  
+from keras.models import Sequential  
+from keras.layers import Dense  
+from tensorflow.keras import optimizers  
+
+def build_model_with_three_hidden_layers():  
+    """
+    Constructs a Keras Sequential model with three hidden layers.  
+    The model is designed for regression problems, using RMSprop as the optimizer.  
+    """  
+    # Initialize a Sequential model to stack layers.  
+    model = Sequential()  
+
+    # Input Layer: 32 neurons matching the input shape of the dataset.  
+    model.add(Dense(32, input_shape=(train_dataset_scaled.shape[1],), activation='relu'))  
+
+    # Hidden Layer 1: 32 neurons with ReLU activation.  
+    model.add(Dense(32, activation='relu'))  
+
+    # Hidden Layer 2: 64 neurons with ReLU activation.  
+    model.add(Dense(64, activation='relu'))  
+
+    # Hidden Layer 3: 128 neurons with ReLU activation.  
+    model.add(Dense(128, activation='relu'))  
+
+    # Output Layer: 1 neuron for regression output.  
+    model.add(Dense(1))  
+
+    # Define the optimizer with a learning rate.  
+    learning_rate = 0.001  
+    optimizer = optimizers.RMSprop(learning_rate=learning_rate)  
+
+    # Compile the model.  
+    model.compile(  
+        loss='mse',               # Mean Squared Error for regression problems.  
+        optimizer=optimizer,      # RMSprop optimizer for training.  
+        metrics=['mae', 'mse', 'mape']  # Metrics for monitoring performance.  
+    )  
+
+    return model  
+
+# Instantiate the model and display its summary.  
+model6 = build_model_with_three_hidden_layers()  
+print('Here is a summary of this model:')  
+model6.summary()  
