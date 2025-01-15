@@ -1,0 +1,39 @@
+### Build a Neural Network Model  
+
+# This function defines and builds a neural network model.  
+from tensorflow.keras import optimizers  
+from tensorflow.keras.models import Sequential  
+from tensorflow.keras.layers import Dense  
+
+def build_model_with_two_hidden_layers():  
+    """
+    Constructs a Keras Sequential model with two hidden layers.  
+    The model is designed for regression problems, with the output layer having a single neuron.  
+    """
+    # Initialize a Sequential model as the container for the layers.  
+    model = Sequential()  
+
+    # Input Layer: 13 neurons matching the input shape of the dataset.  
+    model.add(Dense(13, input_shape=(train_dataset_scaled.shape[1],), activation='relu'))  
+
+    # Hidden Layer 1: 50 neurons with ReLU activation.  
+    model.add(Dense(50, activation='relu'))  
+
+    # Hidden Layer 2: 50 neurons with ReLU activation.  
+    model.add(Dense(50, activation='relu'))  
+
+    # Output Layer: 1 neuron for regression output (no activation function specified).  
+    model.add(Dense(1))  
+
+    # Define the optimizer with a learning rate.  
+    learning_rate = 0.001  
+    optimizer = optimizers.Adam(learning_rate=learning_rate)  
+
+    # Compile the model.  
+    model.compile(  
+        loss='mse',               # Mean Squared Error for regression problems.  
+        optimizer=optimizer,      # Adam optimizer for efficient training.  
+        metrics=['mae', 'mse', 'mape']  # Metrics to monitor during training.  
+    )  
+
+    return model  
