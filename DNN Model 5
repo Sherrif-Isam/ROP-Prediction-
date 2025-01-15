@@ -1,0 +1,52 @@
+### Build a Neural Network Model  
+##### This Model is has similar structure to Model 1 but with diffrent input features#################
+####### Only highly correlated features are used as input features here ######################
+
+# Import necessary libraries for data analysis, preprocessing, and neural network construction.  
+import pandas as pd  
+import matplotlib.pyplot as plt  
+import numpy as np  
+
+# Data preprocessing  
+from sklearn.preprocessing import MinMaxScaler  
+from sklearn.model_selection import train_test_split  
+
+# Neural network modules  
+from keras.models import Sequential  
+from keras.layers import Dense, Dropout  
+from keras.callbacks import EarlyStopping  
+from keras.optimizers import Adam  
+from tensorflow.keras import optimizers  
+
+def build_model_with_two_hidden_layers_v2():  
+    """
+    Constructs a Keras Sequential model with two hidden layers for regression problems.  
+    The model uses RMSprop as the optimizer and is compiled with Mean Squared Error (MSE) as the loss function.  
+    """
+    # Initialize a Sequential model.  
+    model = Sequential()  
+
+    # Input Layer: 19 neurons matching the input shape of the dataset.  
+    model.add(Dense(19, input_shape=(train_dataset_scaled.shape[1],), activation='relu'))  
+
+    # Hidden Layer 1: 50 neurons with ReLU activation.  
+    model.add(Dense(50, activation='relu'))  
+
+    # Hidden Layer 2: 50 neurons with ReLU activation.  
+    model.add(Dense(50, activation='relu'))  
+
+    # Output Layer: 1 neuron for regression output.  
+    model.add(Dense(1))  
+
+    # Define the optimizer with a learning rate.  
+    learning_rate = 0.001  
+    optimizer = optimizers.RMSprop(learning_rate=learning_rate)  
+
+    # Compile the model.  
+    model.compile(  
+        loss='mse',               # Mean Squared Error for regression problems.  
+        optimizer=optimizer,      # RMSprop optimizer for training.  
+        metrics=['mae', 'mse', 'mape']  # Metrics for monitoring model performance.  
+    )  
+
+    return model  
