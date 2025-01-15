@@ -1,0 +1,48 @@
+# Importing necessary libraries for building the neural network model
+from keras.models import Sequential 
+from keras.layers import Dense 
+from tensorflow.keras import optimizers 
+
+# Function to build Model 3 with five hidden layers
+def build_model3_five_hidden_layers(train_dataset_scaled):
+    # Initialize the Sequential model
+    model = Sequential() 
+
+    # Input Layer with 32 neurons, input shape based on the scaled training dataset
+    model.add(Dense(32, input_shape=(train_dataset_scaled.shape[1],)))
+
+    # Hidden Layer 1 with 64 neurons and ReLU activation function
+    model.add(Dense(64, activation='relu'))
+
+    # Hidden Layer 2 with 64 neurons and ReLU activation function
+    model.add(Dense(64, activation='relu'))
+
+    # Hidden Layer 3 with 64 neurons and ReLU activation function
+    model.add(Dense(64, activation='relu'))
+
+    # Hidden Layer 4 with 64 neurons and ReLU activation function
+    model.add(Dense(64, activation='relu'))
+
+    # Hidden Layer 5 with 64 neurons and ReLU activation function
+    model.add(Dense(64, activation='relu'))
+
+    # Output Layer with 1 neuron (for regression)
+    model.add(Dense(1)) 
+
+    # Define the optimizer and learning rate
+    learning_rate = 0.001
+    optimizer = optimizers.RMSprop(learning_rate)
+
+    # Compile the model with MSE loss and MAE, MSE, MAPE metrics for regression
+    model.compile(loss='mse', 
+                  optimizer=optimizer, 
+                  metrics=['mae', 'mse', 'mape'])
+
+    return model
+
+# Initialize the model using the function
+model3 = build_model3_five_hidden_layers(train_dataset_scaled)
+
+# Print a summary of the model architecture
+print('Here is a summary of this model: ') 
+model3.summary()
